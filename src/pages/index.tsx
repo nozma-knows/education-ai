@@ -3,8 +3,20 @@ import { FieldValues } from "react-hook-form";
 import Page from "@/components/ui/pages/Page";
 import CreateCourseForm from "@/components/ui/forms/CreateCourseForm";
 
-const onSubmit = (data: FieldValues) => {
-  console.log("Submitted Create Course Form - ", data);
+const onSubmit = async (data: FieldValues) => {
+  try {
+    const response = await fetch(`../api/openai-test`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt: data.title }),
+    });
+    const responseData = await response.json();
+    console.log("responseData: ", responseData);
+  } catch (error) {
+    console.error("Error calling openai-test endpoint: ", error);
+  }
 };
 
 export default function Home() {
