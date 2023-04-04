@@ -21,16 +21,11 @@ import useWindowSize, {
   ScreenOptions,
 } from "@/components/utils/hooks/useWindowSize";
 
-const title = "Frankenotes";
+const title = "EducationAI";
 
 const tabs = (token?: string) => {
   if (token) {
-    return [
-      {
-        label: "Notepad",
-        link: "/app/notepad",
-      },
-    ];
+    return [];
   }
   return [
     {
