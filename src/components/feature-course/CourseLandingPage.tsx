@@ -160,7 +160,7 @@ export default function CourseLandingPage({ course }: { course: Course }) {
     parsedContent;
   console.log("prereqs: ", prereqs);
   return (
-    <div className="flex flex-col w-full h-full items-center bg-blue-500 p-4 overflow-auto">
+    <div className="flex flex-col w-full h-full items-center p-4 overflow-auto">
       <div className="flex justify-center w-full max-w-7xl">
         <div className="flex flex-col gap-4">
           <CourseDetails title={title} description={description} />

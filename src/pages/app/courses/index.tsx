@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { Context } from "@apollo/client";
 import { parse } from "cookie";
 import CourseContext from "@/components/feature-course/context/CourseContext";
 import { useQuery } from "@apollo/client";
-import { CourseQuery, CoursesQuery } from "@/components/graph";
+import { CoursesQuery } from "@/components/graph";
 import Page from "@/components/ui/pages/Page";
 import LoadingPage from "@/components/ui/pages/LoadingPage";
 import ErrorPage from "@/components/ui/pages/ErrorPage";

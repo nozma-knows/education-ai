@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { NextRouter, useRouter } from "next/router";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
 import CourseContext from "@/components/feature-course/context/CourseContext";
 import { Course } from "@/__generated__/graphql";
@@ -69,6 +69,14 @@ export default function CourseSelector() {
   const router = useRouter();
   const { courses } = useContext(CourseContext);
   const [showCreateCoursePopup, setShowCreateCoursePopup] = useState(false);
+  // const [search, setSearch] = useState("");
+  // const [displayedCourses, setDisplayedCourses] = useState<Course[]>(courses);
+
+  // useEffect(() => {
+  //   if (search !== "") {
+  //     const coursesToDisplay = courses.filter((course) => course.title.includes(search))
+  //   }
+  // }, [search]);
 
   return (
     <div className="flex flex-col w-full h-full items-center bg-blue-400">

@@ -19,13 +19,17 @@ export default function Page({
 
   return (
     <div
-      className={`flex flex-col bg-main-dark text-main-dark w-full min-w-0 relative  overflow-hidden ${
-        !noPadding && "px-2 pb-2 sm:px-8 sm:pb-2"
-      }`}
+      className={`flex flex-col bg-main-dark text-main-dark w-full min-w-0 relative  overflow-hidden`}
       style={{ width: screenWidth, height: screenHeight }}
     >
       {!hideTopbar && <Topbar />}
-      <div className="flex w-full h-full overflow-auto">{children}</div>
+      <div
+        className={`flex w-full h-full overflow-auto ${
+          !noPadding && "px-2 pb-2 sm:px-8 sm:pb-2"
+        }`}
+      >
+        {children}
+      </div>
     </div>
   );
 }
