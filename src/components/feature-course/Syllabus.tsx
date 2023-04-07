@@ -70,13 +70,13 @@ const CourseModules = ({ modules }: { modules: CourseModuleType[] }) => {
       <div className="text-2xl font-bold">Modules</div>
       <ol className="flex flex-col p-2 gap-2">
         {modules.map((modules, index) => {
-          const { title, sections } = modules;
+          const { title, lessons } = modules;
           return (
             <div key={index}>
               <li>{title}</li>
               <ol style={{ listStyleType: "lower-alpha" }}>
-                {sections.map((section, index) => {
-                  return <li key={index}>{section.title}</li>;
+                {lessons.map((lesson, index) => {
+                  return <li key={index}>{lesson.title}</li>;
                 })}
               </ol>
             </div>
@@ -105,13 +105,12 @@ const CourseIntendedOutcomes = ({
 };
 
 export default function Syllabus({ syllabus }: { syllabus: SyllabusType }) {
-  const { title, description, prerequisites, modules, intendedOutcomes } =
-    syllabus;
+  const { title, description, prereqs, units, intendedOutcomes } = syllabus;
   return (
     <div className="flex flex-col max-w-2xl md:max-w-4xl h-full gap-2">
       <CourseDetails title={title} description={description} />
-      <CoursePrereqs prereqs={prerequisites} />
-      <CourseModules modules={modules} />
+      <CoursePrereqs prereqs={prereqs} />
+      <CourseModules modules={units} />
       <CourseIntendedOutcomes intendedOutcomes={intendedOutcomes} />
     </div>
   );

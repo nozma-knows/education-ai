@@ -23,7 +23,7 @@ export default function Button({
   return (
     <button onClick={onClick} disabled={disabled}>
       <div
-        className={`${className} flex button p-4 rounded-xl button-primary 
+        className={`${className} flex button p-4 rounded-lg button-primary 
         ${secondary && "button-secondary"}
         ${disabled && "button-disabled"} 
         ${className}`}

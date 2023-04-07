@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { ApolloError } from "@apollo/client";
 import { FieldValues } from "react-hook-form";
 import { FormProps } from "./ui/forms/FormProps";
-import Topbar from "./ui/Topbar";
 import useWindowSize from "@/components/utils/hooks/useWindowSize";
+
+const Topbar = dynamic(() => import("./ui/Topbar"), {
+  ssr: false,
+});
 
 interface AuthPageProps {
   title: string;

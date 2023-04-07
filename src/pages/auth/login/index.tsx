@@ -33,7 +33,7 @@ export default function Login() {
       sameSite: true,
     });
     localStorage.setItem("token", data.login.token);
-    router.push("/");
+    router.push("/app/courses");
   };
 
   const onSubmit = async (data: FieldValues) => {

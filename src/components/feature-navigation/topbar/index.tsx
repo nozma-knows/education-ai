@@ -1,19 +1,5 @@
-// import MilboLogo from "@/icons/logo.svg";
-// import Logo from "@/components/ui/icons/Logo";
-
-// const title = "EducationAI";
-
-// export default function Topbar() {
-//   return (
-//     <div className="flex justify-between items-center px-4 sm:px-12 py-4">
-//       <Logo Icon={MilboLogo} text={title} altText="Milbo LLC logo" />
-//     </div>
-//   );
-// }
-
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import MilboLogo from "@/icons/logo.svg";
+import EducationAILogo from "@/icons/logo.svg";
 import { useCookies } from "react-cookie";
 import { Tabs, LogoutButton, Dropdown } from "./ui";
 import Logo from "@/components/ui/icons/Logo";
@@ -55,7 +41,7 @@ export default function Topbar() {
 
   return (
     <div className="flex justify-between items-center px-4 sm:px-12 py-4">
-      <Logo Icon={MilboLogo} text={title} altText="Milbo LLC Logo" />
+      <Logo Icon={EducationAILogo} text={title} altText="EducationAI Logo" />
       <div className="flex gap-4">
         {showDropdown ? (
           <Dropdown tabs={tabs(token)} />

@@ -3,8 +3,6 @@ import { Box, Grid } from "@mui/material";
 import TextField from "@/components/ui/form-fields/TextField";
 import Button from "@/components/ui/buttons/Button";
 
-const title = `What would you like to learn about?`;
-
 interface CreateCourseFormProps {
   loading: boolean;
   onSubmit: SubmitHandler<FieldValues>;
@@ -19,7 +17,7 @@ export default function CreateCourseForm({
     control,
     formState: { errors },
     handleSubmit,
-    reset,
+    // reset,
   } = useForm<FieldValues>({
     defaultValues: {
       title: "",
@@ -28,13 +26,13 @@ export default function CreateCourseForm({
   });
 
   const HandleSubmit = (data: FieldValues) => {
+    console.log("data: ", data);
     onSubmit(data);
-    reset();
+    // reset();
   };
 
   return (
     <div className="flex flex-col max-w-lg sm:max-w-2xl md:max-w-4xl gap-12">
-      <h1>{title}</h1>
       <form onSubmit={handleSubmit((data) => HandleSubmit(data))}>
         <Box sx={{ flexGrow: 1 }} className="w-full">
           <Grid container columnSpacing={3}>
@@ -43,7 +41,7 @@ export default function CreateCourseForm({
                 control={control}
                 name="title"
                 type="text"
-                placeholder="Create a title*"
+                placeholder="Course title*"
                 required="Title is required."
                 errors={errors}
               />
@@ -53,9 +51,12 @@ export default function CreateCourseForm({
                 control={control}
                 name="description"
                 type="text"
-                placeholder="Write a description*"
+                placeholder="Course description*"
                 required="Description is required."
                 errors={errors}
+                multiline={true}
+                minRows={3}
+                maxRows={5}
               />
             </Grid>
             <Grid item xs={12} className="flex justify-center">

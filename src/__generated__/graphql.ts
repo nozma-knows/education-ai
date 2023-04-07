@@ -13,6 +13,22 @@ export type Scalars = {
   Float: number;
 };
 
+export type Course = {
+  __typename?: 'Course';
+  auhtor: User;
+  authorId: Scalars['String'];
+  content: Scalars['String'];
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+  updatedAt: Scalars['String'];
+};
+
+export type CreateCourseInput = {
+  authorId: Scalars['ID'];
+  description: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type CreateLoginInput = {
   email: Scalars['String'];
   firstName: Scalars['String'];
@@ -35,14 +51,26 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCourse: Course;
   createLogin: Login;
+  deleteCourse: Course;
   login: Session;
   logout: Session;
 };
 
 
+export type MutationCreateCourseArgs = {
+  input: CreateCourseInput;
+};
+
+
 export type MutationCreateLoginArgs = {
   input: CreateLoginInput;
+};
+
+
+export type MutationDeleteCourseArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -52,8 +80,20 @@ export type MutationLoginArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  course?: Maybe<Course>;
+  courses?: Maybe<Array<Maybe<Course>>>;
   session?: Maybe<Session>;
   users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryCourseArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryCoursesArgs = {
+  authorId: Scalars['String'];
 };
 
 

@@ -37,14 +37,14 @@ type CourseModuleSectionType = {
 
 export type CourseModuleType = {
   title: string;
-  sections: CourseModuleSectionType[];
+  lessons: CourseModuleSectionType[];
 };
 
 export type SyllabusType = {
   title: string;
   description: string;
-  prerequisites: PrerequisiteType[];
-  modules: CourseModuleType[];
+  prereqs: PrerequisiteType[];
+  units: CourseModuleType[];
   intendedOutcomes: string[];
 };
 
@@ -120,6 +120,8 @@ export default async function handler(
   );
 
   const formatInstructions = parser.getFormatInstructions();
+
+  console.log("formatInstructions: ", formatInstructions);
 
   const prompt = new PromptTemplate({
     template:

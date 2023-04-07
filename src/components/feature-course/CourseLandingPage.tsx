@@ -1,33 +1,113 @@
-import {
-  SyllabusType,
-  CourseModuleType,
-} from "@/pages/api/generate-course-syllabus";
-import Syllabus from "./Syllabus";
-import Button from "../ui/buttons/Button";
+import { Course } from "@/__generated__/graphql";
+import { Grid } from "@mui/material";
 
-const WelcomeMessage = ({ title }: { title: string }) => (
-  <div className="text-4xl font-bold">{`Welcome to your personalized course on ${title}`}</div>
-);
+type PrereqTopic = {
+  title: string;
+  description: string;
+};
 
-const CourseModules = ({ modules }: { modules: CourseModuleType[] }) => {
+type CoursePrereq = {
+  title: string;
+  description: string;
+  topics: PrereqTopic[];
+};
+
+type UnitLesson = {
+  title: string;
+  description: string;
+  content: string | null;
+};
+
+type CourseUnit = {
+  title: string;
+  description: string;
+  lessons: UnitLesson[];
+};
+
+const CourseDetails = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => {
   return (
-    <div className="flex flex-col gap-4">
-      <div className="text-2xl font-semibold">Modules</div>
-      <ol className="flex flex-col px-4 gap-2">
-        {modules.map((modules, index) => {
-          const { title, sections } = modules;
+    <div className="flex flex-col w-full h-full px-4 gap-4">
+      <div className="text-4xl font-bold">Course Details</div>
+      <div className="hidden md:flex gap-4 px-8">
+        <div className="text-lg font-semibold">
+          <div>Name</div>
+          <div>Description</div>
+        </div>
+        <div className="text-lg">
+          <div>{title}</div>
+          <div>{description}</div>
+        </div>
+      </div>
+      <div className="flex flex-col md:hidden gap-4 px-8">
+        <div className="flex flex-col">
+          <div className="text-lg font-semibold">Name</div>
+          <div>{title}</div>
+        </div>
+        <div className="flex flex-col">
+          <div className="text-lg font-semibold"> Description</div>
+          <div>{description}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PrereqTopics = ({ topics }: { topics: PrereqTopic[] }) => {
+  // const titles = topics.map((topic) => topic.title);
+  // const descriptions = topics.map((topic) => topic.description);
+  return (
+    <div className="flex gap-4 px-8 text-base">
+      <ul>
+        {topics.map((topic, index) => {
+          const { title } = topic;
           return (
-            <div key={index}>
-              <li>{title}</li>
-              <ol style={{ listStyleType: "lower-alpha" }}>
-                {sections.map((section, index) => {
-                  return (
-                    <li key={index}>
-                      <div>{section.title}</div>
-                    </li>
-                  );
-                })}
-              </ol>
+            <li key={index} className="font-semibold">
+              {title}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
+const CoursePrereqs = ({ prereqs }: { prereqs: CoursePrereq[] }) => {
+  return (
+    <div className="flex flex-col w-full h-full px-4 gap-4">
+      <div className="text-4xl font-bold">Prerequisites</div>
+      <div className="flex flex-col gap-4 px-8 w-fit">
+        {prereqs.map((prereq, index) => {
+          const { title, description, topics } = prereq;
+          return (
+            <div key={index} className="flex flex-col gap-2 text-lg">
+              <div className="flex  flex-col md:flex-row md:gap-4">
+                <div className="flex font-semibold">{title}</div>
+                <div className="flex flex-1">{description}</div>
+              </div>
+              <PrereqTopics topics={topics} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const UnitLessons = ({ lessons }: { lessons: UnitLesson[] }) => {
+  return (
+    <div className="flex gap-4 px-8 text-base">
+      <ol>
+        {lessons.map((lesson, index) => {
+          const { title } = lesson;
+          return (
+            <div key={index} className="flex flex-col text-base">
+              <li className="font-semibold">{title}</li>
             </div>
           );
         })}
@@ -36,28 +116,58 @@ const CourseModules = ({ modules }: { modules: CourseModuleType[] }) => {
   );
 };
 
-export default function CourseLandingPage({
-  syllabus,
-  setCompletingCourse,
-}: {
-  syllabus: SyllabusType;
-  setCompletingCourse: (value: boolean) => void;
-}) {
-  console.log("noah - CourseLangingPage - syllabus: ", syllabus);
-  const { title } = syllabus;
+const CourseUnits = ({ units }: { units: CourseUnit[] }) => {
   return (
-    <div className="flex flex-col w-full h-full px-8">
-      <div className="flex w-full p-8 justify-center">
-        <WelcomeMessage title={title} />
+    <div className="flex flex-col w-full h-full px-4 gap-4">
+      <div className="text-4xl font-bold">Units</div>
+      <div className="flex flex-col gap-4 px-8 w-fit">
+        {units.map((unit, index) => {
+          const { title, description, lessons } = unit;
+          return (
+            <div key={index} className="flex flex-col gap-2 text-lg">
+              <div className="flex flex-col md:flex-row md:gap-4">
+                <div className="flex font-semibold">{title}</div>
+                <div className="flex flex-1">{description}</div>
+              </div>
+              <UnitLessons lessons={lessons} />
+            </div>
+          );
+        })}
       </div>
-      <div className="flex h-2/3 overflow-auto max-w-2xl md:max-w-4xl self-center border-2 border-black rounded-lg p-4">
-        <Syllabus syllabus={syllabus} />
-      </div>
-      <div className="flex self-center p-4">
-        <Button
-          label="Get started!"
-          onClick={() => setCompletingCourse(true)}
-        />
+    </div>
+  );
+};
+
+const IntendedOutcomes = ({ outcomes }: { outcomes: string[] }) => {
+  return (
+    <div className="flex flex-col w-full h-full p-4 gap-4">
+      <div className="text-4xl font-bold">Intended Outcomes</div>
+      <ul>
+        {outcomes.map((outcome, index) => (
+          <li key={index} className="text-lg">
+            {outcome}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default function CourseLandingPage({ course }: { course: Course }) {
+  const parsedContent = JSON.parse(course.content);
+  console.log("parsedContent: ", parsedContent);
+  const { title, description, prereqs, units, intendedOutcomes } =
+    parsedContent;
+  console.log("prereqs: ", prereqs);
+  return (
+    <div className="flex flex-col w-full h-full items-center bg-blue-500 p-4 overflow-auto">
+      <div className="flex justify-center w-full max-w-7xl">
+        <div className="flex flex-col gap-4">
+          <CourseDetails title={title} description={description} />
+          <CoursePrereqs prereqs={prereqs} />
+          <CourseUnits units={units} />
+          <IntendedOutcomes outcomes={intendedOutcomes} />
+        </div>
       </div>
     </div>
   );
