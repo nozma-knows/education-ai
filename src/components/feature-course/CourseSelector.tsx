@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NextRouter, useRouter } from "next/router";
 import { Grid } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
@@ -7,13 +7,14 @@ import { Course } from "@/__generated__/graphql";
 import CreateCoursePopup from "./ui/popups/CreateCoursePopup";
 import Button from "../ui/buttons/Button";
 
-const SearchBar = () => {
+const SearchBar = ({ setSearch }: { setSearch: (search: string) => void }) => {
   return (
     <div className="flex flex-1 items-center gap-4 px-4 bg-black rounded-lg border-2 border-black hover:border-white focus-within:border-white">
       <BsSearch className="text-2xl text-gray-400" />
       <input
         className="flex w-full text-lg bg-transparent outline-none text-white"
         placeholder="Search..."
+        onChange={(e) => setSearch(e.target.value)}
       />
     </div>
   );
@@ -21,14 +22,16 @@ const SearchBar = () => {
 
 const CourseSelectorTopbar = ({
   router,
+  setSearch,
   setShowCreateCoursePopup,
 }: {
   router: NextRouter;
+  setSearch: (search: string) => void;
   setShowCreateCoursePopup: (sccp: boolean) => void;
 }) => {
   return (
     <div className="flex w-full h-14 gap-4">
-      <SearchBar />
+      <SearchBar setSearch={setSearch} />
       <Button
         label="Generate New Course"
         onClick={() => setShowCreateCoursePopup(true)}
@@ -44,9 +47,7 @@ const CoursePreview = ({
   course: Course;
   router: NextRouter;
 }) => {
-  console.log("course: ", course);
-  const parsedContent = JSON.parse(course.content);
-  const { title, description } = parsedContent;
+  const { title, description } = course;
   return (
     <Grid item xs={12} sm={6} md={4}>
       <div
@@ -69,14 +70,21 @@ export default function CourseSelector() {
   const router = useRouter();
   const { courses } = useContext(CourseContext);
   const [showCreateCoursePopup, setShowCreateCoursePopup] = useState(false);
-  // const [search, setSearch] = useState("");
-  // const [displayedCourses, setDisplayedCourses] = useState<Course[]>(courses);
+  const [search, setSearch] = useState("");
+  const [displayedCourses, setDisplayedCourses] = useState<Course[]>(courses);
 
-  // useEffect(() => {
-  //   if (search !== "") {
-  //     const coursesToDisplay = courses.filter((course) => course.title.includes(search))
-  //   }
-  // }, [search]);
+  useEffect(() => {
+    if (search !== "") {
+      const coursesToDisplay = courses.filter((course) => {
+        const lowerCaseTitle = course.title.toLowerCase();
+        const lowerCaseSearch = search.toLowerCase();
+        return lowerCaseTitle.includes(lowerCaseSearch);
+      });
+      setDisplayedCourses(coursesToDisplay);
+    } else {
+      setDisplayedCourses(courses);
+    }
+  }, [courses, search]);
 
   return (
     <div className="flex flex-col w-full h-full items-center bg-blue-400">
@@ -86,11 +94,12 @@ export default function CourseSelector() {
         )}
         <CourseSelectorTopbar
           router={router}
+          setSearch={setSearch}
           setShowCreateCoursePopup={setShowCreateCoursePopup}
         />
         <div className="overflow-auto">
           <Grid container spacing={2}>
-            {courses.map((course) => {
+            {displayedCourses.map((course) => {
               return (
                 <CoursePreview
                   key={course.id}

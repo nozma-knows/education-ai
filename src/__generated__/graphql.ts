@@ -15,11 +15,41 @@ export type Scalars = {
 
 export type Course = {
   __typename?: 'Course';
-  auhtor: User;
+  author: User;
   authorId: Scalars['String'];
-  content: Scalars['String'];
   createdAt: Scalars['String'];
+  description: Scalars['String'];
   id: Scalars['ID'];
+  intendedOutcomes: Array<Maybe<Scalars['String']>>;
+  prereqs: Array<Maybe<CoursePrereq>>;
+  status?: Maybe<Status>;
+  title: Scalars['String'];
+  units: Array<Maybe<CourseUnit>>;
+  updatedAt: Scalars['String'];
+};
+
+export type CoursePrereq = {
+  __typename?: 'CoursePrereq';
+  course: Course;
+  courseId: Scalars['String'];
+  createdAt: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  topics: Array<Maybe<PrereqTopic>>;
+  updatedAt: Scalars['String'];
+};
+
+export type CourseUnit = {
+  __typename?: 'CourseUnit';
+  course: Course;
+  courseId: Scalars['String'];
+  createdAt: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  lessons: Array<Maybe<UnitLesson>>;
+  status: Status;
+  title: Scalars['String'];
   updatedAt: Scalars['String'];
 };
 
@@ -78,6 +108,17 @@ export type MutationLoginArgs = {
   input: LoginInput;
 };
 
+export type PrereqTopic = {
+  __typename?: 'PrereqTopic';
+  createdAt: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  prereq: CoursePrereq;
+  prereqId: Scalars['String'];
+  title: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   course?: Maybe<Course>;
@@ -105,6 +146,24 @@ export type Session = {
   __typename?: 'Session';
   id: Scalars['ID'];
   token: Scalars['String'];
+};
+
+export enum Status {
+  Completed = 'COMPLETED',
+  InProgress = 'IN_PROGRESS',
+  Pending = 'PENDING'
+}
+
+export type UnitLesson = {
+  __typename?: 'UnitLesson';
+  content: Scalars['String'];
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+  status: Status;
+  title: Scalars['String'];
+  unit: CourseUnit;
+  unitId: Scalars['String'];
+  updatedAt: Scalars['String'];
 };
 
 export type User = {

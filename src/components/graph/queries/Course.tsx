@@ -7,7 +7,9 @@ const courseDocument = gql`
       createdAt
       updatedAt
       authorId
-      content
+      title
+      description
+      status
     }
   }
 `;

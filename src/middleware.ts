@@ -6,6 +6,7 @@ import VerifyToken from "@/components/utils/conversion/VerifyToken";
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
+  console.log("request.url: ", request.url);
 
   const verifiedToken =
     token &&
@@ -24,6 +25,7 @@ export async function middleware(request: NextRequest) {
   if (!verifiedToken) {
     return NextResponse.redirect(new URL("/", request.url));
   }
+
   return;
 }
 

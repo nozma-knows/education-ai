@@ -1,4 +1,4 @@
-import { Course } from "@/__generated__/graphql";
+import { Course, Maybe } from "@/__generated__/graphql";
 import { Grid } from "@mui/material";
 
 type PrereqTopic = {
@@ -9,19 +9,18 @@ type PrereqTopic = {
 type CoursePrereq = {
   title: string;
   description: string;
-  topics: PrereqTopic[];
+  topics: Maybe<Maybe<PrereqTopic>[]> | undefined;
 };
 
 type UnitLesson = {
   title: string;
-  description: string;
   content: string | null;
 };
 
 type CourseUnit = {
   title: string;
   description: string;
-  lessons: UnitLesson[];
+  lessons: Maybe<UnitLesson>[];
 };
 
 const CourseDetails = ({
@@ -77,7 +76,7 @@ const PrereqTopics = ({ topics }: { topics: PrereqTopic[] }) => {
   );
 };
 
-const CoursePrereqs = ({ prereqs }: { prereqs: CoursePrereq[] }) => {
+const CoursePrereqs = ({ prereqs }: { prereqs: Maybe<CoursePrereq>[] }) => {
   return (
     <div className="flex flex-col w-full h-full px-4 gap-4">
       <div className="text-4xl font-bold">Prerequisites</div>
@@ -99,7 +98,7 @@ const CoursePrereqs = ({ prereqs }: { prereqs: CoursePrereq[] }) => {
   );
 };
 
-const UnitLessons = ({ lessons }: { lessons: UnitLesson[] }) => {
+const UnitLessons = ({ lessons }: { lessons: Maybe<UnitLesson>[] }) => {
   return (
     <div className="flex gap-4 px-8 text-base">
       <ol>
@@ -116,7 +115,7 @@ const UnitLessons = ({ lessons }: { lessons: UnitLesson[] }) => {
   );
 };
 
-const CourseUnits = ({ units }: { units: CourseUnit[] }) => {
+const CourseUnits = ({ units }: { units: Maybe<CourseUnit>[] }) => {
   return (
     <div className="flex flex-col w-full h-full px-4 gap-4">
       <div className="text-4xl font-bold">Units</div>
@@ -138,7 +137,7 @@ const CourseUnits = ({ units }: { units: CourseUnit[] }) => {
   );
 };
 
-const IntendedOutcomes = ({ outcomes }: { outcomes: string[] }) => {
+const IntendedOutcomes = ({ outcomes }: { outcomes: Maybe<string>[] }) => {
   return (
     <div className="flex flex-col w-full h-full p-4 gap-4">
       <div className="text-4xl font-bold">Intended Outcomes</div>
@@ -154,19 +153,15 @@ const IntendedOutcomes = ({ outcomes }: { outcomes: string[] }) => {
 };
 
 export default function CourseLandingPage({ course }: { course: Course }) {
-  const parsedContent = JSON.parse(course.content);
-  console.log("parsedContent: ", parsedContent);
-  const { title, description, prereqs, units, intendedOutcomes } =
-    parsedContent;
-  console.log("prereqs: ", prereqs);
+  const { title, description, prereqs, units, intendedOutcomes } = course;
   return (
     <div className="flex flex-col w-full h-full items-center p-4 overflow-auto">
       <div className="flex justify-center w-full max-w-7xl">
         <div className="flex flex-col gap-4">
           <CourseDetails title={title} description={description} />
-          <CoursePrereqs prereqs={prereqs} />
-          <CourseUnits units={units} />
-          <IntendedOutcomes outcomes={intendedOutcomes} />
+          {prereqs && <CoursePrereqs prereqs={prereqs} />}
+          {units && <CourseUnits units={units} />}
+          {intendedOutcomes && <IntendedOutcomes outcomes={intendedOutcomes} />}
         </div>
       </div>
     </div>

@@ -7,7 +7,8 @@ export const createCourseDocument = gql`
       createdAt
       updatedAt
       authorId
-      content
+      title
+      description
     }
   }
 `;
