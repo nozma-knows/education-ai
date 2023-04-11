@@ -9,6 +9,26 @@ const courseDocument = gql`
       authorId
       title
       description
+      prereqs {
+        id
+        title
+        description
+        topics {
+          id
+          title
+          description
+        }
+      }
+      units {
+        id
+        title
+        description
+        lessons {
+          id
+          title
+          content
+        }
+      }
       status
     }
   }

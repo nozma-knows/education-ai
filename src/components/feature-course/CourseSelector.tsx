@@ -51,7 +51,7 @@ const CoursePreview = ({
   return (
     <Grid item xs={12} sm={6} md={4}>
       <div
-        className="bg-red-500 h-48 p-4 rounded-lg border-2 border-black hover:border-white cursor-pointer"
+        className="bg-black text-white h-48 p-4 rounded-lg border-2 border-black hover:border-white cursor-pointer"
         onClick={() =>
           router.push({
             pathname: "/app/course/[courseId]",
@@ -77,8 +77,12 @@ export default function CourseSelector() {
     if (search !== "") {
       const coursesToDisplay = courses.filter((course) => {
         const lowerCaseTitle = course.title.toLowerCase();
+        const lowerCaseDescription = course.description.toLowerCase();
         const lowerCaseSearch = search.toLowerCase();
-        return lowerCaseTitle.includes(lowerCaseSearch);
+        return (
+          lowerCaseTitle.includes(lowerCaseSearch) ||
+          lowerCaseDescription.includes(lowerCaseSearch)
+        );
       });
       setDisplayedCourses(coursesToDisplay);
     } else {
@@ -87,7 +91,7 @@ export default function CourseSelector() {
   }, [courses, search]);
 
   return (
-    <div className="flex flex-col w-full h-full items-center bg-blue-400">
+    <div className="flex flex-col w-full h-full items-center bg-gray-500">
       <div className="flex flex-col w-full h-full p-4 gap-4 max-w-7xl">
         {showCreateCoursePopup && (
           <CreateCoursePopup onClose={() => setShowCreateCoursePopup(false)} />

@@ -16,7 +16,10 @@ export default function ActiveCourse() {
 
   if (loading) return <LoadingPage />;
 
-  if (error) return <ErrorPage />;
+  if (error) {
+    console.log("ERROR: ", error);
+    return <ErrorPage />;
+  }
 
   if (data && courseId) {
     const { course } = data;
