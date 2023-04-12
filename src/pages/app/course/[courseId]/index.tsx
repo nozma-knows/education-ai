@@ -23,7 +23,6 @@ export default function ActiveCourse() {
 
   if (data && courseId) {
     const { course } = data;
-    console.log("course: ", course);
     return (
       <Page noPadding>
         <CourseLandingPage course={course} />

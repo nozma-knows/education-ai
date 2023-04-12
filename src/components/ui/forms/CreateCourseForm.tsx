@@ -17,7 +17,6 @@ export default function CreateCourseForm({
     control,
     formState: { errors },
     handleSubmit,
-    // reset,
   } = useForm<FieldValues>({
     defaultValues: {
       title: "",
@@ -26,9 +25,7 @@ export default function CreateCourseForm({
   });
 
   const HandleSubmit = (data: FieldValues) => {
-    console.log("data: ", data);
     onSubmit(data);
-    // reset();
   };
 
   return (

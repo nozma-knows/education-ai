@@ -4,8 +4,8 @@ import { CourseQuery } from "@/components/graph";
 import Page from "@/components/ui/pages/Page";
 import LoadingPage from "@/components/ui/pages/LoadingPage";
 import ErrorPage from "@/components/ui/pages/ErrorPage";
-import { Course } from "@/__generated__/graphql";
-import LessonView from '@/components/feature-course/ui/LessonView'
+import { Course, CourseUnit, UnitLesson } from "@/__generated__/graphql";
+import LessonView from "@/components/feature-course/ui/LessonView";
 
 const CourseNavigator = ({
   course,
@@ -19,9 +19,9 @@ const CourseNavigator = ({
   const router = useRouter();
   const { title, units } = course;
   return (
-    <div className="flex flex-col w-96 bg-blue-500 px-2">
+    <div className="flex flex-col bg-black text-white max-w-sm px-2">
       <div className="flex self-center text-2xl font-bold p-2">{title}</div>
-      <div className="h-1 w-full bg-black" />
+      <div className="h-1 w-full bg-white" />
       <div className="flex flex-col p-4 gap-2">
         {units.map((unit, unitIndex) => {
           if (unit) {
@@ -34,11 +34,12 @@ const CourseNavigator = ({
                   onClick={() =>
                     !isActiveUnit &&
                     router.push({
-                      pathname: "/app/course/[courseId]/unit/[unitId]/lesson/[lessonId]",
+                      pathname:
+                        "/app/course/[courseId]/unit/[unitId]/lesson/[lessonId]",
                       query: {
                         courseId: router.query.courseId,
                         unitId: id,
-                        lessonId: lessons[0].id
+                        lessonId: lessons[0]!.id,
                       },
                     })
                   }
@@ -103,17 +104,19 @@ export default function Lesson() {
 
   if (data && courseId && unitId) {
     const { course } = data;
-    const unit = course.units.find((unit) => unit.id === unitId)
-    const lesson = unit.lessons.find((lesson) => lesson.id === lessonId)
+    const unit = course.units.find((unit: CourseUnit) => unit.id === unitId);
+    const lesson = unit.lessons.find(
+      (lesson: UnitLesson) => lesson.id === lessonId
+    );
     return (
       <Page noPadding>
-        <div className="flex">
+        <div className="flex w-full">
           <CourseNavigator
             course={course}
             unitId={unitId as string}
             lessonId={lessonId as string}
           />
-          <LessonView lesson={lesson} />
+          <LessonView course={course} lesson={lesson} />
         </div>
       </Page>
     );

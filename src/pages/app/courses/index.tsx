@@ -37,7 +37,6 @@ export default function Courses({ token }: { token: string }) {
 
   if (data && authorId) {
     const { courses } = data;
-    console.log("courses: ", courses);
     return (
       <CourseContext.Provider
         value={{

@@ -67,6 +67,15 @@ export type CreateLoginInput = {
   passwordConfirmation: Scalars['String'];
 };
 
+export type GenerateLessonInput = {
+  courseDescription: Scalars['String'];
+  courseTitle: Scalars['String'];
+  lessonId: Scalars['String'];
+  lessonTitle: Scalars['String'];
+  pastTopics: Scalars['String'];
+  topics: Scalars['String'];
+};
+
 export type Login = {
   __typename?: 'Login';
   email: Scalars['String'];
@@ -84,6 +93,7 @@ export type Mutation = {
   createCourse: Course;
   createLogin: Login;
   deleteCourse: Course;
+  generateLesson: UnitLesson;
   login: Session;
   logout: Session;
 };
@@ -101,6 +111,11 @@ export type MutationCreateLoginArgs = {
 
 export type MutationDeleteCourseArgs = {
   id: Scalars['String'];
+};
+
+
+export type MutationGenerateLessonArgs = {
+  input: GenerateLessonInput;
 };
 
 
@@ -161,6 +176,7 @@ export type UnitLesson = {
   id: Scalars['ID'];
   status: Status;
   title: Scalars['String'];
+  topics: Scalars['String'];
   unit: CourseUnit;
   unitId: Scalars['String'];
   updatedAt: Scalars['String'];

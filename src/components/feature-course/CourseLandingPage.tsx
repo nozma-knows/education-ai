@@ -147,7 +147,6 @@ const UnitLessons = ({
       <div>
         {lessons.map((lesson, index) => {
           if (lesson) {
-            console.log("lesson: ", lesson);
             const { unitId, title } = lesson;
             return (
               <div key={index} className="flex flex-col text-base">

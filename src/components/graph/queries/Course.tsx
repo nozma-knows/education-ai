@@ -27,6 +27,7 @@ const courseDocument = gql`
           id
           unitId
           title
+          topics
           content
         }
       }

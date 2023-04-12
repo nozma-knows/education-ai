@@ -33,13 +33,11 @@ export default function CreateCoursePopup({ onClose }: CreateCoursPopupProps) {
 
   // Function for calling create note mutation
   const CreateCourse = (title: string, description: string) => {
-    console.log("CreateCourse - authorId: ", authorId);
     const input = {
       authorId,
       title,
       description,
     };
-    console.log("Input: ", input);
     createCourse({
       variables: {
         input,

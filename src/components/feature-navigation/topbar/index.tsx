@@ -11,7 +11,12 @@ const title = "EducationAI";
 
 const tabs = (token?: string) => {
   if (token) {
-    return [];
+    return [
+      {
+        label: "Courses",
+        link: "/app/courses",
+      },
+    ];
   }
   return [
     {

@@ -121,8 +121,6 @@ export default async function handler(
 
   const formatInstructions = parser.getFormatInstructions();
 
-  console.log("formatInstructions: ", formatInstructions);
-
   const prompt = new PromptTemplate({
     template:
       "Create a syllabus for a course with the following title: {title} and description: {description} and format: {format_instructions}.",
