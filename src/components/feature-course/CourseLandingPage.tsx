@@ -17,6 +17,7 @@ type CoursePrereq = {
 
 type UnitLesson = {
   id: string;
+  unitId: string;
   title: string;
   content: string | null;
 };
@@ -141,13 +142,13 @@ const UnitLessons = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="flex flex-col gap-2 px-8 text-base bg-gray-300 py-4 rounded-lg">
+    <div className="flex flex-col w-full gap-2 px-8 text-base bg-gray-300 py-4 rounded-lg">
       <div>{description}</div>
       <div>
         {lessons.map((lesson, index) => {
           if (lesson) {
             console.log("lesson: ", lesson);
-            const { id, title } = lesson;
+            const { unitId, title } = lesson;
             return (
               <div key={index} className="flex flex-col text-base">
                 <label className="flex gap-2 font-semibold">
@@ -156,10 +157,12 @@ const UnitLessons = ({
                     className="cursor-pointer hover:font-bold"
                     onClick={() =>
                       router.push({
-                        pathname: "/app/course/[courseId]/unit/[unitId]",
+                        pathname:
+                          "/app/course/[courseId]/unit/[unitId]/lesson/[lessonId]",
                         query: {
                           courseId: router.query.courseId,
-                          unitId: id,
+                          unitId: unitId,
+                          lessonId: lesson.id,
                         },
                       })
                     }
@@ -185,6 +188,7 @@ const CourseUnits = ({
   expandedUnits: string[];
   setExpandedUnits: (expandedUnits: string[]) => void;
 }) => {
+  const router = useRouter();
   return (
     <div className="flex flex-col w-full h-full px-4 gap-4">
       <div className="text-4xl font-bold">Units</div>
@@ -196,7 +200,7 @@ const CourseUnits = ({
             return (
               <li key={index} className="text-lg">
                 <div
-                  className="flex items-center gap-2 font-semibold cursor-pointer hover:underline"
+                  className="flex items-center w-full gap-2 font-semibold cursor-pointer hover:underline"
                   onClick={() =>
                     isExpanded
                       ? setExpandedUnits(
@@ -206,7 +210,11 @@ const CourseUnits = ({
                   }
                 >
                   <div className="flex">{title}</div>
-                  {isExpanded ? <BsChevronUp /> : <BsChevronDown />}
+                  {isExpanded ? (
+                    <BsChevronUp className="button" />
+                  ) : (
+                    <BsChevronDown className="button" />
+                  )}
                 </div>
                 {isExpanded && (
                   <div className="">

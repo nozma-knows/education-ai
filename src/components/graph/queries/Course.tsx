@@ -25,6 +25,7 @@ const courseDocument = gql`
         description
         lessons {
           id
+          unitId
           title
           content
         }
