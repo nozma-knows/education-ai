@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { BsChevronUp, BsChevronDown } from "react-icons/bs";
 import { Course, Maybe } from "@/__generated__/graphql";
+import { PulseLoader } from "react-spinners";
 
 type PrereqTopic = {
   title: string;
@@ -85,6 +86,17 @@ const PrereqTopics = ({
             }
           })}
       </ul>
+    </div>
+  );
+};
+
+const LoadingCoursePrereqs = () => {
+  return (
+    <div className="flex flex-col w-full h-full px-4 gap-4">
+      <div className="text-4xl font-bold">Prerequisites</div>
+      <div className="flex flex-col px-8 w-fit">
+        <PulseLoader color="#000" size={20} />
+      </div>
     </div>
   );
 };
@@ -178,6 +190,18 @@ const UnitLessons = ({
   );
 };
 
+const LoadingCourseUnits = () => {
+  const router = useRouter();
+  return (
+    <div className="flex flex-col w-full h-full px-4 gap-4">
+      <div className="text-4xl font-bold">Units</div>
+      <div className="flex flex-col px-8 w-fit">
+        <PulseLoader color="#000" size={20} />
+      </div>
+    </div>
+  );
+};
+
 const CourseUnits = ({
   units,
   expandedUnits,
@@ -260,7 +284,7 @@ export default function CourseLandingPage({
     <div className="flex flex-col w-full h-full items-center p-4 overflow-auto">
       <div className="flex flex-col gap-4 w-full">
         <CourseDetails title={title} description={description} />
-        {loadingPrereqs && <div>Loading prereqs...</div>}
+        {loadingPrereqs && <LoadingCoursePrereqs />}
         {!loadingPrereqs && prereqs && prereqs.length !== 0 && (
           <CoursePrereqs
             prereqs={prereqs}
@@ -268,7 +292,7 @@ export default function CourseLandingPage({
             setExpandedPrereqs={setExpandedPrereqs}
           />
         )}
-        {loadingUnits && <div>Loading units...</div>}
+        {loadingUnits && <LoadingCourseUnits />}
         {!loadingUnits && units && (
           <CourseUnits
             units={units}
