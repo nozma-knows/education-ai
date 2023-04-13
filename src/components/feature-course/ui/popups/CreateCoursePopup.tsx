@@ -2,7 +2,11 @@ import { useState, useContext, SetStateAction } from "react";
 import CourseContext from "../../context/CourseContext";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
-import { CreateCourseMutation } from "@/components/graph";
+import {
+  CreateCourseMutation,
+  GeneratePrereqsMutation,
+  GenerateUnitsMutaiton,
+} from "@/components/graph";
 import { Course } from "@/__generated__/graphql";
 import { FieldValues } from "react-hook-form";
 import useWindowSize from "@/components/utils/hooks/useWindowSize";
@@ -27,6 +31,8 @@ export default function CreateCoursePopup({ onClose }: CreateCoursPopupProps) {
       refetchCourses();
       onClose();
       setLoading(false);
+      GeneratePrerqs(data.createCourse.id);
+      GenerateUnits(data.createCourse.id);
     },
     onError: () => console.log("error!"),
   });
@@ -41,6 +47,41 @@ export default function CreateCoursePopup({ onClose }: CreateCoursPopupProps) {
     createCourse({
       variables: {
         input,
+      },
+    });
+  };
+
+  // Generate prereqs mutation
+  const [generatePrerqs] = useMutation(GeneratePrereqsMutation, {
+    onCompleted: (data: { generatePrereqs: Course }) => {
+      console.log("generatePrereqs data: ", data);
+      refetchCourses();
+    },
+    onError: () => console.log("error!"),
+  });
+
+  // Function for calling create note mutation
+  const GeneratePrerqs = (id: string) => {
+    generatePrerqs({
+      variables: {
+        id,
+      },
+    });
+  };
+
+  // Generate units mutation
+  const [generateUnits] = useMutation(GenerateUnitsMutaiton, {
+    onCompleted: (data: { createCourse: Course }) => {
+      refetchCourses();
+    },
+    onError: () => console.log("error!"),
+  });
+
+  // Function for calling create note mutation
+  const GenerateUnits = (id: string) => {
+    generateUnits({
+      variables: {
+        id,
       },
     });
   };

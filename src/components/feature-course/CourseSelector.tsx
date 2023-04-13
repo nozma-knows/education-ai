@@ -72,6 +72,7 @@ export default function CourseSelector() {
   const [showCreateCoursePopup, setShowCreateCoursePopup] = useState(false);
   const [search, setSearch] = useState("");
   const [displayedCourses, setDisplayedCourses] = useState<Course[]>(courses);
+  const [loadingPrereqs, setLoadingPrereqs] = useState(false);
 
   useEffect(() => {
     if (search !== "") {

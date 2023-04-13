@@ -244,7 +244,15 @@ const IntendedOutcomes = ({ outcomes }: { outcomes: Maybe<string>[] }) => {
   );
 };
 
-export default function CourseLandingPage({ course }: { course: Course }) {
+export default function CourseLandingPage({
+  course,
+  loadingPrereqs,
+  loadingUnits,
+}: {
+  course: Course;
+  loadingPrereqs: boolean;
+  loadingUnits: boolean;
+}) {
   const { title, description, prereqs, units, intendedOutcomes } = course;
   const [expandedPrereqs, setExpandedPrereqs] = useState<string[]>([]);
   const [expandedUnits, setExpandedUnits] = useState<string[]>([]);
@@ -252,14 +260,16 @@ export default function CourseLandingPage({ course }: { course: Course }) {
     <div className="flex flex-col w-full h-full items-center p-4 overflow-auto">
       <div className="flex flex-col gap-4 w-full">
         <CourseDetails title={title} description={description} />
-        {prereqs && prereqs.length !== 0 && (
+        {loadingPrereqs && <div>Loading prereqs...</div>}
+        {!loadingPrereqs && prereqs && prereqs.length !== 0 && (
           <CoursePrereqs
             prereqs={prereqs}
             expandedPrereqs={expandedPrereqs}
             setExpandedPrereqs={setExpandedPrereqs}
           />
         )}
-        {units && (
+        {loadingUnits && <div>Loading units...</div>}
+        {!loadingUnits && units && (
           <CourseUnits
             units={units}
             expandedUnits={expandedUnits}

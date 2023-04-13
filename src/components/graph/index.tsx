@@ -6,3 +6,5 @@ export { default as CreateSessionMutation } from "./mutations/CreateSession";
 export { default as DeleteSessionMutation } from "./mutations/DeleteSession";
 export { default as CreateCourseMutation } from "./mutations/CreateCourse";
 export { default as GenerateLessonMutation } from "./mutations/GenerateLesson";
+export { default as GeneratePrereqsMutation } from "./mutations/GeneratePrereqs";
+export { default as GenerateUnitsMutaiton } from "./mutations/GenerateUnits";

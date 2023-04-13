@@ -19,7 +19,7 @@ const CourseNavigator = ({
   const router = useRouter();
   const { title, units } = course;
   return (
-    <div className="flex flex-col bg-black text-white max-w-sm px-2">
+    <div className="flex flex-col bg-black text-white max-w-sm px-2 rounded-tr-lg">
       <div className="flex self-center text-2xl font-bold p-2">{title}</div>
       <div className="h-1 w-full bg-white" />
       <div className="flex flex-col p-4 gap-2">
