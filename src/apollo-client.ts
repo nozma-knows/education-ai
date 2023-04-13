@@ -1,6 +1,10 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
+console.log(
+  "process.env.NEXT_PUBLIC_BACKEND_URI: ",
+  process.env.NEXT_PUBLIC_BACKEND_URI
+);
 const uri = `${process.env.NEXT_PUBLIC_BACKEND_URI}/api`;
 const httpLink = createHttpLink({
   uri,

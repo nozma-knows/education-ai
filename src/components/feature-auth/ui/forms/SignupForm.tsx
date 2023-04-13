@@ -83,7 +83,7 @@ export default function SignupForm({ loading, onSubmit }: SignupFormProps) {
             />
           </Grid>
           <Grid item xs={12} className="flex justify-center">
-            <Button label="Let me in" loading={loading} />
+            <Button label="Sign me up" loading={loading} />
           </Grid>
         </Grid>
       </Box>
