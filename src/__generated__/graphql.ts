@@ -46,8 +46,10 @@ export type CourseUnit = {
   courseId: Scalars['String'];
   createdAt: Scalars['String'];
   description: Scalars['String'];
+  exercises: Array<Maybe<UnitExercise>>;
   id: Scalars['ID'];
   lessons: Array<Maybe<UnitLesson>>;
+  quizzes: Array<Maybe<UnitQuiz>>;
   status: Status;
   title: Scalars['String'];
   updatedAt: Scalars['String'];
@@ -93,7 +95,12 @@ export type Mutation = {
   createCourse: Course;
   createLogin: Login;
   deleteCourse: Course;
+  generateExercises: UnitExercise;
+  generateIntendedOutcomes: Course;
   generateLesson: UnitLesson;
+  generatePrereqs: Course;
+  generateQuiz: UnitQuiz;
+  generateUnits: Course;
   login: Session;
   logout: Session;
 };
@@ -114,8 +121,33 @@ export type MutationDeleteCourseArgs = {
 };
 
 
+export type MutationGenerateExercisesArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationGenerateIntendedOutcomesArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationGenerateLessonArgs = {
   input: GenerateLessonInput;
+};
+
+
+export type MutationGeneratePrereqsArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationGenerateQuizArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationGenerateUnitsArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -157,6 +189,19 @@ export type QuerySessionArgs = {
   id: Scalars['String'];
 };
 
+export type QuizQuestion = {
+  __typename?: 'QuizQuestion';
+  answer: Scalars['String'];
+  choices: Array<Maybe<Scalars['String']>>;
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+  question: Scalars['String'];
+  status: Status;
+  unit: CourseUnit;
+  unitId: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
 export type Session = {
   __typename?: 'Session';
   id: Scalars['ID'];
@@ -169,6 +214,17 @@ export enum Status {
   Pending = 'PENDING'
 }
 
+export type UnitExercise = {
+  __typename?: 'UnitExercise';
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+  status: Status;
+  task: Scalars['String'];
+  unit: CourseUnit;
+  unitId: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
 export type UnitLesson = {
   __typename?: 'UnitLesson';
   content: Scalars['String'];
@@ -177,6 +233,17 @@ export type UnitLesson = {
   status: Status;
   title: Scalars['String'];
   topics: Scalars['String'];
+  unit: CourseUnit;
+  unitId: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
+export type UnitQuiz = {
+  __typename?: 'UnitQuiz';
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+  questions: QuizQuestion;
+  status: Status;
   unit: CourseUnit;
   unitId: Scalars['String'];
   updatedAt: Scalars['String'];

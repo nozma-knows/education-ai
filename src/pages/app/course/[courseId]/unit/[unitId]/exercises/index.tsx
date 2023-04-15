@@ -4,13 +4,13 @@ import { CourseQuery } from "@/components/graph";
 import Page from "@/components/ui/pages/Page";
 import LoadingPage from "@/components/ui/pages/LoadingPage";
 import ErrorPage from "@/components/ui/pages/ErrorPage";
-import { CourseUnit, UnitLesson } from "@/__generated__/graphql";
-import LessonView from "@/components/feature-course/ui/LessonView";
+import { CourseUnit } from "@/__generated__/graphql";
 import CourseNavigator from "@/components/feature-course/ui/CourseNavigator";
+import ExercisesView from "@/components/feature-course/ui/ExercisesView";
 
-export default function Lesson() {
+export default function Exercises() {
   const router = useRouter();
-  const { courseId, unitId, lessonId } = router.query;
+  const { courseId, unitId } = router.query;
 
   const { loading, error, data } = useQuery(CourseQuery, {
     variables: { courseId },
@@ -24,19 +24,18 @@ export default function Lesson() {
 
   if (data && courseId && unitId) {
     const { course } = data;
+    console.log("course: ", course);
     const unit = course.units.find((unit: CourseUnit) => unit.id === unitId);
-    const lesson = unit.lessons.find(
-      (lesson: UnitLesson) => lesson.id === lessonId
-    );
+
     return (
       <Page noPadding>
         <div className="flex w-full">
           <CourseNavigator
             course={course}
             unitId={unitId as string}
-            lessonId={lessonId as string}
+            lessonId="exercises"
           />
-          <LessonView course={course} lesson={lesson} />
+          <ExercisesView unit={unit} />
         </div>
       </Page>
     );

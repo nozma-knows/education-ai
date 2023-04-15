@@ -154,7 +154,7 @@ const UnitLessons = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="flex flex-col w-full gap-2 px-8 text-base bg-gray-300 py-4 rounded-lg">
+    <div className="flex flex-col gap-2">
       <div>{description}</div>
       <div>
         {lessons.map((lesson, index) => {
@@ -185,6 +185,33 @@ const UnitLessons = ({
             );
           }
         })}
+      </div>
+    </div>
+  );
+};
+
+const UnitExercises = ({ unitId }: { unitId: string }) => {
+  const router = useRouter();
+  return (
+    <div>
+      <div className="flex flex-col text-base">
+        <label className="flex gap-2 font-semibold">
+          <input type="checkbox" disabled />
+          <div
+            className="cursor-pointer hover:font-bold"
+            onClick={() =>
+              router.push({
+                pathname: "/app/course/[courseId]/unit/[unitId]/exercises",
+                query: {
+                  courseId: router.query.courseId,
+                  unitId: unitId,
+                },
+              })
+            }
+          >
+            {`Exercises`}
+          </div>
+        </label>
       </div>
     </div>
   );
@@ -240,8 +267,9 @@ const CourseUnits = ({
                   )}
                 </div>
                 {isExpanded && (
-                  <div className="">
+                  <div className="flex flex-col w-full px-8 text-base bg-gray-300 py-4 rounded-lg">
                     <UnitLessons description={description} lessons={lessons} />
+                    <UnitExercises unitId={id} />
                   </div>
                 )}
               </li>

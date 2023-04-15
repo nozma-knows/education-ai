@@ -30,6 +30,11 @@ const courseDocument = gql`
           topics
           content
         }
+        exercises {
+          id
+          task
+          status
+        }
       }
       status
     }
