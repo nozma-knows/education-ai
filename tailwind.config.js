@@ -9,7 +9,15 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        lobster: ["Lobster", "cursive"],
+        handrawn: ["Delicious Handrawn", "cursive"],
+        caveat: ["Caveat", "cursive"],
+        lilita: ["Lilita One", "cursive"],
+        rowdies: ["Rowdies", "cursive"],
+      },
+    },
   },
   plugins: [require("@tailwindcss/line-clamp")],
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import EducationAILogo from "@/icons/logo.svg";
+import rabbitHoleLogo from "@/icons/logo.svg";
 import { useCookies } from "react-cookie";
 import { Tabs, LogoutButton, Dropdown } from "./ui";
 import Logo from "@/components/ui/icons/Logo";
@@ -7,7 +7,7 @@ import useWindowSize, {
   ScreenOptions,
 } from "@/components/utils/hooks/useWindowSize";
 
-const title = "EducationAI";
+const title = "rabbit hole";
 
 const tabs = (token?: string) => {
   if (token) {
@@ -46,7 +46,7 @@ export default function Topbar() {
 
   return (
     <div className="flex justify-between items-center px-4 sm:px-12 py-4">
-      <Logo Icon={EducationAILogo} text={title} altText="EducationAI Logo" />
+      <Logo Icon={rabbitHoleLogo} text={title} altText="rabbit hole Logo" />
       <div className="flex gap-4">
         {showDropdown ? (
           <Dropdown tabs={tabs(token)} />

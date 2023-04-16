@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
       <Head>
-        <title>EducationAI</title>
+        <title>rabbit hole</title>
       </Head>
       <Component {...pageProps} />
     </ApolloProvider>

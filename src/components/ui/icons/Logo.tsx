@@ -17,7 +17,7 @@ export default function Logo({ Icon, text, altText }: LogoProps) {
         <div className="relative flex w-14 h-14 lg:w-16 lg:h-16">
           <Image src={Icon} alt={altText} fill />
         </div>
-        <div className="hidden sm:block">{text}</div>
+        <div className="hidden sm:block font-lilita">{text}</div>
       </div>
     </Link>
   );
