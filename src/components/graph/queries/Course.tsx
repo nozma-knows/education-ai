@@ -35,6 +35,17 @@ const courseDocument = gql`
           task
           status
         }
+        quizzes {
+          id
+          questions {
+            id
+            question
+            choices
+            answer
+            status
+          }
+          status
+        }
       }
       status
     }

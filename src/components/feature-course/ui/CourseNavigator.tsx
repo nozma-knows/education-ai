@@ -16,7 +16,19 @@ export default function CourseNavigator({
   const { title, units } = course;
   return (
     <div className="flex flex-col bg-black text-white max-w-sm px-2 rounded-tr-lg">
-      <div className="flex self-center text-2xl font-bold p-2">{title}</div>
+      <div
+        className="flex self-center text-2xl font-bold p-2 button"
+        onClick={() =>
+          router.push({
+            pathname: "/app/course/[courseId]",
+            query: {
+              courseId: router.query.courseId,
+            },
+          })
+        }
+      >
+        {title}
+      </div>
       <div className="h-1 w-full bg-white" />
       <div className="flex flex-col p-4 gap-2">
         {units.map((unit: Maybe<CourseUnit>, unitIndex: number) => {
@@ -24,6 +36,7 @@ export default function CourseNavigator({
             const { id, title, lessons } = unit;
             const isActiveUnit = unitId === id;
             const isExercises = lessonId === "exercises";
+            const isQuiz = lessonId === "quiz";
             return (
               <div key={id}>
                 <div
@@ -68,7 +81,7 @@ export default function CourseNavigator({
                             }
                           >
                             <div>{`${unitIndex + 1}.${lessonIndex + 1}`}</div>
-                            <div>{`${title}`}</div>
+                            <div className="hover:underline">{`${title}`}</div>
                           </div>
                         );
                       }
@@ -89,7 +102,24 @@ export default function CourseNavigator({
                         })
                       }
                     >
-                      <div>{`Exercises`}</div>
+                      <div className="hover:underline">{`Exercises`}</div>
+                    </div>
+                    <div
+                      key={id}
+                      className={`flex gap-2 ${
+                        isQuiz ? "font-bold" : "cursor-pointer"
+                      }`}
+                      onClick={() =>
+                        router.push({
+                          pathname: "/app/course/[courseId]/unit/[unitId]/quiz",
+                          query: {
+                            courseId: router.query.courseId,
+                            unitId: unitId,
+                          },
+                        })
+                      }
+                    >
+                      <div className="hover:underline">{`Quiz`}</div>
                     </div>
                   </div>
                 )}

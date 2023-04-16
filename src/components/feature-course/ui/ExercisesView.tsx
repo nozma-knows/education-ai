@@ -1,24 +1,17 @@
 import { useState, useEffect } from "react";
-import {
-  CourseUnit,
-  Maybe,
-  UnitExercise,
-  UnitLesson,
-} from "@/__generated__/graphql";
-import { useMutation, useQuery } from "@apollo/client";
-import { ExercisesQuery, GenerateExercisesMutation } from "@/components/graph";
+import { CourseUnit, Maybe, UnitExercise } from "@/__generated__/graphql";
+import { useMutation } from "@apollo/client";
+import { GenerateExercisesMutation } from "@/components/graph";
 import { PulseLoader } from "react-spinners";
 
 export default function ExercisesView({ unit }: { unit: CourseUnit }) {
-  console.log("unit: ", unit);
-
   const [exercises, setExercises] = useState<Maybe<UnitExercise>[]>(
-    unit.exercises
+    unit.exercises ? unit.exercises : []
   );
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setExercises(unit.exercises);
+    setExercises(unit.exercises ? unit.exercises : []);
   }, [unit.exercises, unit.id]);
 
   // MUTATIONS
@@ -54,13 +47,16 @@ export default function ExercisesView({ unit }: { unit: CourseUnit }) {
     );
   }
 
-  console.log("exercises: ", exercises);
-
   return (
-    <ol>
-      {exercises.map((exercise) => (
-        <li key={exercise!.id}>{exercise!.task}</li>
-      ))}
-    </ol>
+    <div className="flex flex-col w-full overflow-auto p-4">
+      <div className="flex self-center text-4xl pb-4 font-bold">{`Exercises: ${unit.title}`}</div>
+      <ol className="flex flex-col self-center max-w-2xl gap-4 p-4">
+        {exercises.map((exercise) => (
+          <li key={exercise!.id} className="text-lg">
+            {exercise!.task}
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }

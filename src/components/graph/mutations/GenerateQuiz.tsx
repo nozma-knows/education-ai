@@ -4,6 +4,14 @@ export const generateQuizDocument = gql`
   mutation GenerateQuiz($id: String!) {
     generateQuiz(id: $id) {
       id
+      questions {
+        id
+        question
+        choices
+        answer
+        status
+      }
+      status
     }
   }
 `;

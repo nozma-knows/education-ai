@@ -217,6 +217,33 @@ const UnitExercises = ({ unitId }: { unitId: string }) => {
   );
 };
 
+const UnitQuiz = ({ unitId }: { unitId: string }) => {
+  const router = useRouter();
+  return (
+    <div>
+      <div className="flex flex-col text-base">
+        <label className="flex gap-2 font-semibold">
+          <input type="checkbox" disabled />
+          <div
+            className="cursor-pointer hover:font-bold"
+            onClick={() =>
+              router.push({
+                pathname: "/app/course/[courseId]/unit/[unitId]/quiz",
+                query: {
+                  courseId: router.query.courseId,
+                  unitId: unitId,
+                },
+              })
+            }
+          >
+            {`Quiz`}
+          </div>
+        </label>
+      </div>
+    </div>
+  );
+};
+
 const LoadingCourseUnits = () => {
   const router = useRouter();
   return (
@@ -270,6 +297,7 @@ const CourseUnits = ({
                   <div className="flex flex-col w-full px-8 text-base bg-gray-300 py-4 rounded-lg">
                     <UnitLessons description={description} lessons={lessons} />
                     <UnitExercises unitId={id} />
+                    <UnitQuiz unitId={id} />
                   </div>
                 )}
               </li>

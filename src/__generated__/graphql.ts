@@ -46,7 +46,7 @@ export type CourseUnit = {
   courseId: Scalars['String'];
   createdAt: Scalars['String'];
   description: Scalars['String'];
-  exercises: Array<Maybe<UnitExercise>>;
+  exercises?: Maybe<Array<Maybe<UnitExercise>>>;
   id: Scalars['ID'];
   lessons: Array<Maybe<UnitLesson>>;
   quizzes: Array<Maybe<UnitQuiz>>;
@@ -95,7 +95,7 @@ export type Mutation = {
   createCourse: Course;
   createLogin: Login;
   deleteCourse: Course;
-  generateExercises: UnitExercise;
+  generateExercises: Array<Maybe<UnitExercise>>;
   generateIntendedOutcomes: Course;
   generateLesson: UnitLesson;
   generatePrereqs: Course;
@@ -170,6 +170,7 @@ export type Query = {
   __typename?: 'Query';
   course?: Maybe<Course>;
   courses?: Maybe<Array<Maybe<Course>>>;
+  exercises?: Maybe<Array<Maybe<UnitExercise>>>;
   session?: Maybe<Session>;
   users?: Maybe<Array<Maybe<User>>>;
 };
@@ -182,6 +183,11 @@ export type QueryCourseArgs = {
 
 export type QueryCoursesArgs = {
   authorId: Scalars['String'];
+};
+
+
+export type QueryExercisesArgs = {
+  unitId: Scalars['String'];
 };
 
 
@@ -242,7 +248,7 @@ export type UnitQuiz = {
   __typename?: 'UnitQuiz';
   createdAt: Scalars['String'];
   id: Scalars['ID'];
-  questions: QuizQuestion;
+  questions: Array<Maybe<QuizQuestion>>;
   status: Status;
   unit: CourseUnit;
   unitId: Scalars['String'];
