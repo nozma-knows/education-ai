@@ -23,10 +23,13 @@ export default function Button({
   return (
     <button onClick={onClick} disabled={disabled}>
       <div
-        className={`${className} flex button p-4 rounded-lg button-primary 
-        ${secondary && "button-secondary"}
-        ${disabled && "button-disabled"} 
-        ${className}`}
+        className={`${
+          className
+            ? `${className}`
+            : `flex button p-4 rounded-lg button-primary ${
+                secondary && "button-secondary"
+              } ${disabled && "button-disabled"} `
+        }`}
       >
         {loading ? (
           <PulseLoader color="#58335e" size={8} />

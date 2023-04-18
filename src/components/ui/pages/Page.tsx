@@ -36,7 +36,7 @@ export default function Page({
           } overflow-hidden`}
         >
           <div
-            className={`flex h-full overflow-auto max-w-[88rem] ${
+            className={`flex h-full overflow-auto w-full max-w-[88rem] ${
               !noPadding && "px-2 pb-2 sm:px-8 sm:pb-2"
             }`}
           >
