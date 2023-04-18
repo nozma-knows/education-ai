@@ -51,7 +51,7 @@ const CoursePreview = ({
   return (
     <Grid item xs={12} sm={6} md={4}>
       <div
-        className="bg-black text-white h-48 p-4 rounded-lg border-2 border-black hover:border-white cursor-pointer"
+        className="bg-[#64B6AC] text-black h-48 p-4 rounded-lg border-2 border-transparent hover:border-white cursor-pointer"
         onClick={() =>
           router.push({
             pathname: "/app/course/[courseId]",
@@ -92,8 +92,8 @@ export default function CourseSelector() {
   }, [courses, search]);
 
   return (
-    <div className="flex flex-col w-full h-full items-center bg-gray-500">
-      <div className="flex flex-col w-full h-full p-4 gap-4 max-w-7xl">
+    <div className="flex flex-col w-full h-full items-center">
+      <div className="flex flex-col w-full h-full p-4 gap-4">
         {showCreateCoursePopup && (
           <CreateCoursePopup onClose={() => setShowCreateCoursePopup(false)} />
         )}

@@ -20,12 +20,21 @@ const tabs = (token?: string) => {
   }
   return [
     {
+      label: "Pricing",
+      link: "/pricing",
+    },
+    {
+      label: "About",
+      link: "/about",
+    },
+    {
       label: "Login",
       link: "/auth/login",
     },
     {
-      label: "Sign up",
+      label: "Get Started",
       link: "/auth/signup",
+      className: "bg-[#64B6AC] px-4 py-2 rounded-lg",
     },
   ];
 };
