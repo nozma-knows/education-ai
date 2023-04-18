@@ -25,7 +25,11 @@ export default function Page({
         className={`flex flex-col`}
         style={{ width: screenWidth, height: screenHeight }}
       >
-        {!hideTopbar && <Topbar />}
+        {!hideTopbar && (
+          // <div className={`${!noPadding && "py-4"}`}>
+          <Topbar />
+          // </div>
+        )}
         <div
           className={`flex w-full h-full justify-center ${
             bgColor && `bg-[${bgColor}]`
