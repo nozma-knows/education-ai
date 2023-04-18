@@ -45,7 +45,7 @@ export default function Courses({ token }: { token: string }) {
           refetchCourses,
         }}
       >
-        <Page noPadding>
+        <Page noPadding bgColor="#173F5F">
           <CourseSelector />
         </Page>
       </CourseContext.Provider>

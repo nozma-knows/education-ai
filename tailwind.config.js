@@ -16,6 +16,7 @@ module.exports = {
         caveat: ["Caveat", "cursive"],
         lilita: ["Lilita One", "cursive"],
         rowdies: ["Rowdies", "cursive"],
+        overpass: ["Overpass", "sans-serif"],
       },
     },
   },

@@ -4,6 +4,7 @@ import Link from "next/link";
 type TabType = {
   label: string;
   link: string;
+  className?: string;
 };
 
 interface TabsProps {
@@ -16,12 +17,12 @@ export default function Tabs({ tabs }: TabsProps) {
   const currentPath = `${router.pathname}`;
   return (
     <div className="flex gap-4">
-      {tabs.map(({ label, link }) => {
+      {tabs.map(({ label, link, className }) => {
         const onPath = link === currentPath; // True if tab corresponds to current path
         return (
           <Link
-            className={`flex ${
-              onPath && "text-[#a56baf]"
+            className={`flex items-center ${className} ${
+              onPath && "text-[#173F5F]"
             } text-lg font-semibold button`}
             key={label}
             href={link}
