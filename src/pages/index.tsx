@@ -49,8 +49,8 @@ const Header = () => {
 const Footer = () => {
   return (
     <div className="flex w-full justify-between items-center text-xs sm:text-sm md:text-md font-bold">
-      <div className="flex items-center gap-2 md:gap-4 justify">
-        <div className="relative flex w-10 h-10 lg:w-16 lg:h-16">
+      <div className="flex items-center gap-2 justify">
+        <div className="relative flex w-10 h-10">
           <Image src={rabbitHoleLogo} alt="rabbit hole Logo" fill />
         </div>
         <div className="hidden sm:block font-lilita text-lg">{title}</div>
