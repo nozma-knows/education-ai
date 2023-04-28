@@ -1,59 +1,69 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { useCookies } from "react-cookie";
+import React, { useContext, useEffect, useState } from "react";
+import Router from "next/router";
 import { useMutation } from "@apollo/client";
 import { FieldValues } from "react-hook-form";
-import { CreateSessionMutation } from "@/components/graph";
 import { Session } from "@/__generated__/graphql";
-import LoginForm from "@/components/feature-auth/ui/forms/LoginForm";
+import { SigninMutation } from "@/components/graph";
 import AuthPage from "@/components/feature-auth";
-
-export function getServerSideProps(context: any) {
-  return { props: {} };
-}
+import { magic } from "@/lib/magic";
+import UserContext from "@/lib/UserContext";
+import LoginForm from "@/components/feature-auth/ui/forms/LoginForm";
 
 export default function Login() {
-  const router = useRouter();
-  const [cookie, setCookie] = useCookies(["token"]);
-
+  // Next Router
+  const { user, setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const [createSession, { loading, error }] = useMutation(
-    CreateSessionMutation,
-    {
-      onCompleted: (data: { login: Session }) => onCompleted(data),
-      onError: (error) => setErrorMessage(error.message),
-    }
-  );
+  // Redirect to courses page if user is logged in
+  useEffect(() => {
+    console.log("USER: ", user);
+    user?.issuer && Router.push("/app/courses");
+  }, [user]);
 
-  const onCompleted = (data: { login: Session }) => {
-    setCookie("token", JSON.stringify(data.login.token), {
-      path: "/",
-      maxAge: 3600, // Expires after 1hr
-      sameSite: true,
-    });
-    localStorage.setItem("token", data.login.token);
-    router.push("/app/courses");
-  };
+  // Signin Mutation Call
+  const [signin, { loading, error }] = useMutation(SigninMutation, {
+    onCompleted: (data: { signin: Session }) => {
+      console.log("SIGNIN login: data: ", data);
+      localStorage.setItem("issuer", data.signin.issuer);
+      setUser({
+        issuer: data.signin.issuer,
+        publicAddress: data.signin.publicAddress,
+        email: data.signin.email,
+        phoneNumber: null,
+      });
+      Router.push("/app/courses");
+    },
+    onError: (error) => setErrorMessage(error.message),
+  });
 
+  // Function to handle form submission
   const onSubmit = async (data: FieldValues) => {
-    createSession({
-      variables: {
-        input: {
-          email: data.email,
-          password: data.password,
+    const { email } = data; // Destructure email from form data
+    try {
+      // Send magic link email
+      let didToken = await magic?.auth.loginWithMagicLink({
+        email,
+        redirectURI: new URL("/auth/callback", window.location.origin).href,
+      });
+      signin({
+        variables: {
+          input: {
+            didToken,
+          },
         },
-      },
-    });
+      });
+    } catch (error) {
+      console.log("error: ", error);
+    }
   };
 
   return (
     <AuthPage
-      title="Log in"
-      loading={loading}
+      title="Login"
+      loading={false}
       onSubmit={onSubmit}
       Form={LoginForm}
-      error={error}
+      error={undefined}
       errorMessage={errorMessage}
     />
   );

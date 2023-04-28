@@ -3,7 +3,7 @@ import { ApolloQueryResult } from "@apollo/client";
 import { Course } from "@/__generated__/graphql";
 
 type CourseContentType = {
-  authorId: string;
+  // authorId: string;
   courses: Course[];
   refetchCourses: (
     variables?:
@@ -15,7 +15,7 @@ type CourseContentType = {
 };
 
 const CourseContext = createContext<CourseContentType>({
-  authorId: "",
+  // authorId: "",
   courses: [],
   refetchCourses: () => Promise.resolve({} as ApolloQueryResult<any>),
 });

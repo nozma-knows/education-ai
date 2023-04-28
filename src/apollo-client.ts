@@ -11,11 +11,16 @@ const httpLink = createHttpLink({
 });
 
 const sessionLink = setContext((request, { headers }) => {
-  const token = localStorage.getItem("token");
+  const issuer = localStorage.getItem("issuer");
+  const didToken = localStorage.getItem("didToken");
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: issuer
+        ? `Bearer ${issuer}`
+        : didToken
+        ? `Bearer ${didToken}`
+        : ``,
     },
   };
 });

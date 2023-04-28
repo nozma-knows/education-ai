@@ -13,3 +13,6 @@ export { default as GenerateUnitsMutaiton } from "./mutations/GenerateUnits";
 export { default as GenerateIntendedOutcomesMutation } from "./mutations/GenerateIntendedOutcomes";
 export { default as GenerateExercisesMutation } from "./mutations/GenerateExercises";
 export { default as GenerateQuizMutation } from "./mutations/GenerateQuiz";
+export { default as SignupMutation } from "./mutations/Signup";
+export { default as SigninMutation } from "./mutations/Signin";
+export { default as SignoutMutation } from "./mutations/Signout";

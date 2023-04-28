@@ -36,7 +36,7 @@ export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
               errors={errors}
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <TextField
               control={control}
               name="password"
@@ -45,7 +45,7 @@ export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
               required="Password is required."
               errors={errors}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} className="flex justify-center">
             <Button label="Let me in" loading={loading} />
           </Grid>

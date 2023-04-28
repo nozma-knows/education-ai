@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import rabbitHoleLogo from "@/icons/logo.svg";
 import { useCookies } from "react-cookie";
 import { Tabs, LogoutButton, Dropdown } from "./ui";
@@ -6,11 +6,12 @@ import Logo from "@/components/ui/icons/Logo";
 import useWindowSize, {
   ScreenOptions,
 } from "@/components/utils/hooks/useWindowSize";
+import UserContext from "@/lib/UserContext";
 
 const title = "rabbit hole";
 
-const tabs = (token?: string) => {
-  if (token) {
+const tabs = (issuer?: string | null) => {
+  if (issuer) {
     return [
       {
         label: "Courses",
@@ -43,6 +44,8 @@ export default function Topbar() {
   const [{ token }] = useCookies(["token"]);
   const size = useWindowSize();
 
+  const { user } = useContext(UserContext);
+
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
@@ -58,12 +61,12 @@ export default function Topbar() {
       <Logo Icon={rabbitHoleLogo} text={title} altText="rabbit hole Logo" />
       <div className="flex gap-4">
         {showDropdown ? (
-          <Dropdown tabs={tabs(token)} />
+          <Dropdown tabs={tabs(user ? user.issuer : null)} />
         ) : (
-          <Tabs tabs={tabs(token)} />
+          <Tabs tabs={tabs(user ? user.issuer : null)} />
         )}
 
-        {token && <LogoutButton />}
+        {user && user.issuer && <LogoutButton />}
       </div>
     </div>
   );

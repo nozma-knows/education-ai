@@ -1,33 +1,27 @@
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
-import { useCookies } from "react-cookie";
-import { DeleteSessionMutation } from "@/components/graph";
-import { Session } from "@/__generated__/graphql";
+import { SignoutMutation } from "@/components/graph";
 import IconButton from "@/components/ui/buttons/IconButton";
 import { HiOutlineLogout } from "react-icons/hi";
+import { magic } from "@/lib/magic";
+import { useContext } from "react";
+import UserContext from "@/lib/UserContext";
 
 export default function LogoutButton() {
   const router = useRouter();
 
-  const [_, __, removeCookie] = useCookies(["token"]);
+  const { setUser } = useContext(UserContext);
 
-  const [deleteSession, { data, loading, error }] = useMutation(
-    DeleteSessionMutation,
-    {
-      onCompleted: (data: { login: Session }) => {
-        removeCookie("token", { path: "/" });
-        localStorage.removeItem("token");
-        router.push("/");
-      },
-      onError: (error) => {
-        console.log("Error logging out: ", error);
-      },
-    }
-  );
+  const signout = () => {
+    magic?.user.logout().then(() => {
+      setUser(null);
+      router.push("/");
+    });
+  };
 
   return (
-    <div>
-      <IconButton Icon={HiOutlineLogout} onClick={() => deleteSession()} />
+    <div className="bg-green-400 flex">
+      <IconButton Icon={HiOutlineLogout} onClick={() => signout()} />
     </div>
   );
 }

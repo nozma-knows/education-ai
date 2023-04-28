@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const coursesDocument = gql`
-  query Courses($authorId: String!) {
-    courses(authorId: $authorId) {
+  query Courses {
+    courses {
       id
       createdAt
       updatedAt

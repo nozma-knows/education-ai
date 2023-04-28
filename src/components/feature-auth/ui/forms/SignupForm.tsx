@@ -59,7 +59,7 @@ export default function SignupForm({ loading, onSubmit }: SignupFormProps) {
               errors={errors}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <TextField
               control={control}
               name="password"
@@ -81,7 +81,7 @@ export default function SignupForm({ loading, onSubmit }: SignupFormProps) {
               }
               errors={errors}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} className="flex justify-center">
             <Button label="Sign me up" loading={loading} />
           </Grid>

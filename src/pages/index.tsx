@@ -29,7 +29,7 @@ const Header = () => {
           duration: 1,
         }}
       >
-        <div className="font-lilita text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
+        <div className="u text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
           {headerTitle}
         </div>
         <div className="font-overpass text-xl sm:text-3xl md:text-4xl lg:text-5xl">
@@ -88,7 +88,6 @@ const GeneratedCourses = ({
   courses: { title: string; description: string }[];
   setSearch: (search: string) => void;
 }) => {
-  console.log("courses: ", courses);
   return (
     <div className="flex flex-col w-full h-fit p-8 bg-[#173F5F] gap-8 rounded-lg">
       <div className="font-lilita text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white">

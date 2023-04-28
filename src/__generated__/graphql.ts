@@ -61,14 +61,6 @@ export type CreateCourseInput = {
   title: Scalars['String'];
 };
 
-export type CreateLoginInput = {
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  password: Scalars['String'];
-  passwordConfirmation: Scalars['String'];
-};
-
 export type GenerateLessonInput = {
   courseDescription: Scalars['String'];
   courseTitle: Scalars['String'];
@@ -78,22 +70,9 @@ export type GenerateLessonInput = {
   topics: Scalars['String'];
 };
 
-export type Login = {
-  __typename?: 'Login';
-  email: Scalars['String'];
-  id: Scalars['ID'];
-  user: User;
-};
-
-export type LoginInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   createCourse: Course;
-  createLogin: Login;
   deleteCourse: Course;
   generateExercises: Array<Maybe<UnitExercise>>;
   generateIntendedOutcomes: Course;
@@ -101,18 +80,13 @@ export type Mutation = {
   generatePrereqs: Course;
   generateQuiz: UnitQuiz;
   generateUnits: Course;
-  login: Session;
-  logout: Session;
+  signin: Session;
+  signup: Session;
 };
 
 
 export type MutationCreateCourseArgs = {
   input: CreateCourseInput;
-};
-
-
-export type MutationCreateLoginArgs = {
-  input: CreateLoginInput;
 };
 
 
@@ -151,8 +125,13 @@ export type MutationGenerateUnitsArgs = {
 };
 
 
-export type MutationLoginArgs = {
-  input: LoginInput;
+export type MutationSigninArgs = {
+  input: SigninInput;
+};
+
+
+export type MutationSignupArgs = {
+  input: SignupInput;
 };
 
 export type PrereqTopic = {
@@ -168,6 +147,7 @@ export type PrereqTopic = {
 
 export type Query = {
   __typename?: 'Query';
+  allCourses?: Maybe<Array<Maybe<Course>>>;
   course?: Maybe<Course>;
   courses?: Maybe<Array<Maybe<Course>>>;
   exercises?: Maybe<Array<Maybe<UnitExercise>>>;
@@ -178,11 +158,6 @@ export type Query = {
 
 export type QueryCourseArgs = {
   id: Scalars['String'];
-};
-
-
-export type QueryCoursesArgs = {
-  authorId: Scalars['String'];
 };
 
 
@@ -210,8 +185,21 @@ export type QuizQuestion = {
 
 export type Session = {
   __typename?: 'Session';
+  email: Scalars['String'];
   id: Scalars['ID'];
-  token: Scalars['String'];
+  issuer: Scalars['String'];
+  publicAddress: Scalars['String'];
+};
+
+export type SigninInput = {
+  didToken: Scalars['String'];
+};
+
+export type SignupInput = {
+  didToken: Scalars['String'];
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
 };
 
 export enum Status {
@@ -258,8 +246,8 @@ export type UnitQuiz = {
 export type User = {
   __typename?: 'User';
   email?: Maybe<Scalars['String']>;
-  emailVerified?: Maybe<Scalars['Boolean']>;
   firstName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  issuer: Scalars['String'];
   lastName?: Maybe<Scalars['String']>;
 };

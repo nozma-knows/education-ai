@@ -1,8 +1,9 @@
 import useWindowSize from "@/components/utils/hooks/useWindowSize";
-import dynamic from "next/dynamic";
-const Topbar = dynamic(() => import("@/components/feature-navigation/topbar"), {
-  ssr: false,
-});
+// import dynamic from "next/dynamic";
+// const Topbar = dynamic(() => import("@/components/feature-navigation/topbar"), {
+//   ssr: false,
+// });
+import Topbar from "@/components/feature-navigation/topbar";
 
 interface PageProps {
   hideTopbar?: boolean;
